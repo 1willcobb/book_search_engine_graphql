@@ -32,7 +32,8 @@ const LoginForm = () => {
         variables: { ...userFormData },
       });
 
-      Auth.login(data.login.token);
+    console.log(data);
+    Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -46,11 +47,9 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      {data ? (
-        <p>Success!</p>
-      ) : (
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+    <div>
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        {error && (
           <Alert
             dismissible
             onClose={() => setShowAlert(false)}
@@ -59,46 +58,46 @@ const LoginForm = () => {
           >
             Something went wrong with your login credentials!
           </Alert>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="email">Email</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Your email"
-              name="email"
-              onChange={handleInputChange}
-              value={userFormData.email}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Email is required!
-            </Form.Control.Feedback>
-          </Form.Group>
+        )}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your email"
+            name="email"
+            onChange={handleInputChange}
+            value={userFormData.email}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Email is required!
+          </Form.Control.Feedback>
+        </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="password">Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Your password"
-              name="password"
-              onChange={handleInputChange}
-              value={userFormData.password}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Password is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button
-            disabled={!(userFormData.email && userFormData.password)}
-            type="submit"
-            variant="success"
-          >
-            Submit
-          </Button>
-        </Form>
-      )}
-      {error && <p>{error.message}</p>}
-    </>
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Your password"
+            name="password"
+            onChange={handleInputChange}
+            value={userFormData.password}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Password is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Button
+          disabled={!(userFormData.email && userFormData.password)}
+          type="submit"
+          variant="success"
+        >
+          Submit
+        </Button>
+      </Form>
+      {data && <div>Success! You may now head to the homepage.</div>}
+    </div>
   );
 };
 
