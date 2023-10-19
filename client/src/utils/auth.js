@@ -30,6 +30,9 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
+    if (localStorage.getItem('id_token') === 'undefined') {
+      return null;
+    }
     return localStorage.getItem('id_token');
   }
 
